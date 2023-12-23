@@ -11,7 +11,7 @@ export const baseServerlessConfiguration: Partial<Serverless> = {
     esbuild: {
       bundle: true,
       minify: true,
-      target: 'node18',
+      target: 'node16',
       packager: 'yarn',
       sourcemap: true,
       sourcesContent: false,
@@ -19,15 +19,84 @@ export const baseServerlessConfiguration: Partial<Serverless> = {
   },
   provider: {
     name: 'aws',
-    runtime: 'nodejs18.x',
-    memorySize: 128,
+    runtime: 'nodejs16.x',
+    memorySize: 256,
     apiGateway: {
       minimumCompressionSize: 1024,
     },
-    stage: '${opt:stage}',
-    environment: {
-      AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-    },
+    stage: 'dev',
     region: 'eu-west-1',
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: [
+          'dynamodb:PutItem',
+          'dynamodb:Scan',
+          'dynamodb:GetItem',
+          'dynamodb:UpdateItem',
+          'dynamodb:Query',
+        ],
+        Resource: [
+          'arn:aws:dynamodb:eu-west-1:991785523771:table/AuctionsTable_1',
+          'arn:aws:dynamodb:eu-west-1:991785523771:table/AuctionsTable_1/index/statusAndEndingDate',
+        ],
+      },
+    ],
+  },
+  resources: {
+    Resources: {
+      AuctionsTable: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: 'AuctionsTable_1',
+          BillingMode: 'PAY_PER_REQUEST',
+          AttributeDefinitions: [
+            {
+              AttributeName: 'id',
+              AttributeType: 'S',
+            },
+            {
+              AttributeName: 'status',
+              AttributeType: 'S',
+            },
+            {
+              AttributeName: 'endingAt',
+              AttributeType: 'S',
+            },
+          ],
+          KeySchema: [
+            {
+              AttributeName: 'id',
+              KeyType: 'HASH',
+            },
+          ],
+          GlobalSecondaryIndexes: [
+            {
+              IndexName: 'statusAndEndingAt',
+              KeySchema: [
+                {
+                  AttributeName: 'status',
+                  KeyType: 'HASH',
+                },
+                {
+                  AttributeName: 'endingAt',
+                  KeyType: 'RANGE',
+                },
+              ],
+              Projection: {
+                ProjectionType: 'ALL',
+              },
+            },
+          ],
+        },
+      },
+      AuctionsProcessTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          DisplayName: 'Auctions Process Topic',
+          TopicName: 'AuctionsProcessTopic',
+        },
+      },
+    },
   },
 };

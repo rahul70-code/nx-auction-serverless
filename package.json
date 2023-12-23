@@ -79,6 +79,9 @@
   "packageManager": "yarn@3.7.0",
   "dependencies": {
     "@swc/helpers": "0.5.2",
+    "aws-sdk": "^2.1524.0",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^9.0.2",
     "tslib": "2.6.2"
   }
 }
