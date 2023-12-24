@@ -17,6 +17,7 @@ A monrepo style, modern boilerplate or template project for [Serverless framewor
 
 ## Table of contents
 
+- [Nx Introduction](#nx-introduction)
 - [Whats Included](#whats-included)
 - [Template Layout](#template-layout)
 - [Prerequisites](#prerequisites)
@@ -28,9 +29,25 @@ A monrepo style, modern boilerplate or template project for [Serverless framewor
 - [Maintainer](#maintainer)
 - [License](#license)
 
+
+# Nx Introduction
+
+- Nx comes with the building blocks to not only scale your monorepo locally and provide great DX while developing, but also to address one of the major pain points: fast, maintainable CI.
+- It includes 
+   * **Nx cache**: Built-in local and remote caching to speed up your tasks and save you time and money.
+   * **Nx Agents**: A single line to enable distributed computation, across multiple machines. Fully managed agents, dynamically allocated based on PR size.
+   * **Nx workflows**: Next generation, fully managed CI solution with distribution at its core, designed from the ground up for monorepos.
+
+
+**Components of the mono-repo**
+- **nx workspace** -  workspace refers to a monorepo that contains multiple projects, such as applications and libraries, managed together using the Nx toolset. Nx is a set of extensible dev tools for monorepos, designed to help developers build, test, and scale large codebases more effectively. It is defined in nx.json with other options.
+- **Services** - Each services/packages are standalone repository which can run/build individually or with nx. Each service have project.json which defines how the package build, serve, deploy, remove, lint and test. nx will fetch individual project.json and process.
+
+for more information - [checkout here](https://nx.dev/getting-started/intro)
+
 ## Whats Included
 
-- A template project layout using latest version of Nx and Servrless framework
+- A template project layout using latest version of Nx and Serverless framework
 - An easy to use workspace generator to generate a template/stack with Serverless framework files and related Nx configuration
 - Configured with AWS provider and it can be easily adopted to any cloud provider
 
@@ -222,19 +239,6 @@ Depending on your prefrered package manager, follow the instructions below to bu
 
 ​ Visit [Nx Cloud](https://nx.app/) to learn more and enable it
 
-## Contribution
-
-Found an issue? feel free to raise an issue with information to reproduce.
-
-Pull requests are welcome to improve.
-
-## Support
-
-Like the template?
-
-Click to <a href="https://www.buymeacoffee.com/sudokar" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="50" width="250"></a>
-
-Or, Add a star :star: to the repository
 
 ## Maintainer
 
